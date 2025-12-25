@@ -1,0 +1,11 @@
+{
+  "name": "Medium Curve",
+  "modulus": 1009,
+  "a": 0,
+  "b": 7,
+  "generator": [1, 54],
+  "order": null,
+  "calculate_order": true,
+  "description": "Medium elliptic curve with p=1009 (10-bit prime). Same form as Bitcoin's secp256k1. Requires ~100+ qubits. Very slow to simulate, may be impractical on most systems."
+}
+

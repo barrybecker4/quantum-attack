@@ -1,0 +1,11 @@
+{
+  "name": "Small Curve",
+  "modulus": 251,
+  "a": 0,
+  "b": 7,
+  "generator": [10, 76],
+  "order": null,
+  "calculate_order": true,
+  "description": "Small elliptic curve with p=251 (8-bit prime). Same form as Bitcoin's secp256k1 (y² = x³ + 7). Requires ~80 qubits, may take minutes to hours to simulate."
+}
+

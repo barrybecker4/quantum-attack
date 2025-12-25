@@ -1,0 +1,11 @@
+{
+  "name": "Tiny Curve",
+  "modulus": 5,
+  "a": 3,
+  "b": 2,
+  "generator": [2, 1],
+  "order": 5,
+  "calculate_order": false,
+  "description": "Tiny elliptic curve with p=5. Requires ~15 qubits, runs in seconds. Good for quick testing and understanding the algorithm."
+}
+
