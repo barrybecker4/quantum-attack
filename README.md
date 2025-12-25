@@ -16,8 +16,9 @@ Classically, this requires ~2^128 operations (infeasible). Shor's algorithm solv
 Since we can't simulate 2300+ qubits needed for real Bitcoin keys, we use toy curves:
 - **Tiny curve (p=5)**: ~15 qubits, runs in seconds
 - **Small curve (p=251)**: ~80 qubits, pushes simulator limits
+- **Medium curve (p=1009)**: ~100+ qubits, very slow to simulate
 
-Both demonstrate the same principle that would break Bitcoin given sufficient qubits.
+All demonstrate the same principle that would break Bitcoin given sufficient qubits.
 
 ## Prerequisites
 
@@ -34,12 +35,16 @@ pip install qiskit-aer-gpu
 ## Project Structure
 
 ```
-ecdlp_quantum_attack/
+quantum-attack/
 ├── README.md                    # This file
 ├── requirements.txt             # Python dependencies
 ├── classical_ec.py              # Classical elliptic curve operations
-├── tiny_curve_attack.py         # Attack on p=5 curve (~15 qubits)
-├── small_curve_attack.py        # Attack on p=251 curve (~80 qubits)
+├── elliptic_curve_attack.py     # Generic attack program (works with any curve config)
+├── configs/                      # Curve configuration files
+│   ├── tiny_curve.json          # p=5 curve (~15 qubits)
+│   ├── small_curve.json         # p=251 curve (~80 qubits)
+│   └── medium_curve.json        # p=1009 curve (~100+ qubits)
+├── simplified_demo.py           # Simplified quantum attack simulation
 └── bitcoin_extrapolation.py     # Resource estimates for real Bitcoin
 ```
 
@@ -59,8 +64,14 @@ python simplified_demo.py --explain
 
 **Requires full Qiskit + qiskit_ecdlp library:**
 ```bash
-# Full quantum circuit attack (see Colab notebook)
-python tiny_curve_attack.py
+# Full quantum circuit attack on tiny curve
+python elliptic_curve_attack.py --config configs/tiny_curve.json --key 3 --shots 8
+
+# Attack on small curve (slower)
+python elliptic_curve_attack.py --config configs/small_curve.json --key 42 --shots 4
+
+# Show curve information
+python elliptic_curve_attack.py --config configs/tiny_curve.json --info
 ```
 
 ## Full Implementation (Google Colab)
@@ -72,6 +83,30 @@ Google Colab notebook (runs in browser, no local setup needed):
 
 This notebook uses the qiskit_ecdlp library to build actual quantum circuits for
 elliptic curve point addition and runs them on Qiskit's Aer simulator.
+
+## Configuration Files
+
+Curve configurations are stored as JSON files in the `configs/` directory. Each file specifies:
+- `modulus`: Prime field modulus (p)
+- `a`, `b`: Curve coefficients (y² = x³ + ax + b)
+- `generator`: Generator point [x, y]
+- `order`: Group order (or set `calculate_order: true` to compute automatically)
+- `name`: Human-readable curve name
+- `description`: Description of the curve
+
+Example configuration:
+```json
+{
+  "name": "Tiny Curve",
+  "modulus": 5,
+  "a": 3,
+  "b": 2,
+  "generator": [2, 1],
+  "order": 5,
+  "calculate_order": false,
+  "description": "Tiny elliptic curve with p=5..."
+}
+```
 
 ## Understanding the Output
 
