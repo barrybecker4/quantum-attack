@@ -1,0 +1,16 @@
+# Core quantum computing
+qiskit>=1.0.0
+qiskit-aer>=0.13.0
+
+# For GPU acceleration (optional but recommended)
+# qiskit-aer-gpu>=0.13.0
+
+# ECDLP quantum circuits library
+# Install from: https://p51lee.github.io/assets/python/wheel/qiskit_ecdlp-0.1-py3-none-any.whl
+
+# Standard scientific computing
+numpy>=1.24.0
+sympy>=1.12.0  # Required by qiskit_ecdlp
+
+# For post-processing (built into Python 3.9+)
+# fractions (standard library)
